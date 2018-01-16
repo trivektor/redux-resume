@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class Home extends Component {
   render() {
     return (
-      <div>Home Page</div>
+      <section className="container">
+        <h1 className="page-header">Home</h1>
+        <Link to="/resumes">Resumes</Link>
+      </section>
     );
   }
 }
