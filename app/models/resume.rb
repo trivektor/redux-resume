@@ -1,6 +1,8 @@
 class Resume
   include Cequel::Record
-  key :id, :timeuuid, auto: true
+
+  key :id, :uuid, auto: true
   column :title, :text
   column :description, :text
+  timestamps
 end

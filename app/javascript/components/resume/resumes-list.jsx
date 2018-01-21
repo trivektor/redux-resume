@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const ResumesList = ({ resumes }) => {
   return (
@@ -6,15 +7,17 @@ const ResumesList = ({ resumes }) => {
       {
         resumes.map((r) => {
           return (
-            <li key={r.id.n}>
-              <h3 className="lead">{r.title}</h3>
+            <li key={r.id}>
+              <h3 className="lead">
+                <Link to={`/resume/${r.id}`}>{r.title}</Link>
+              </h3>
               <p>{r.description}</p>
             </li>
           );
         })
       }
     </ul>
-  )
+  );
 }
 
 export default ResumesList;

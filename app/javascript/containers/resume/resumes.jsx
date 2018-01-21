@@ -17,7 +17,7 @@ class Resumes extends Component {
       <section className="container">
         <h1 className="page-header">
           Resumes
-          <Link to="resumes/new" className="btn btn-success pull-right">New Resume</Link>
+          <Link to="/resumes/new" className="btn btn-success pull-right">New Resume</Link>
         </h1>
         <ResumesList resumes={resumes} />
       </section>

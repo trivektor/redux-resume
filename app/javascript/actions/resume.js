@@ -15,3 +15,22 @@ export const fetchResumes = () => {
   };
 };
 export const fetchResumesSuccess = createAction(FETCH_RESUMES_SUCCESS, (resumes) => resumes);
+
+const FETCH_RESUME_START = 'FETCH_RESUME_START';
+const FETCH_RESUME_SUCCESS = 'FETCH_RESUME_SUCCESS';
+
+export const fetchResumeStart = createAction(FETCH_RESUME_START);
+export const fetchResume = (id) => {
+  return (dispatch) => {
+    dispatch(fetchResumeStart());
+
+    fetch(`/api/resumes/${id}`).then(response => response.json()).then((resume) => {
+      dispatch(fetchResumeSuccess(resume));
+    });
+  };
+};
+export const fetchResumeSuccess = createAction(FETCH_RESUME_SUCCESS);
+
+const MODIFY_RESUME_PROPS = 'MODIFY_RESUME_PROPS';
+
+export const modifyResumeProps = createAction(MODIFY_RESUME_PROPS, (props) => props);
