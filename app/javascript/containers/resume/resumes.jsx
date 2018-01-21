@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import DocumentTitle from 'react-document-title';
 import * as actionCreators from 'actions';
 import ResumesList from 'components/resume/resumes-list';
 
@@ -14,13 +15,15 @@ class Resumes extends Component {
     const { resumes } = this.props;
 
     return (
-      <section className="container">
-        <h1 className="page-header">
-          Resumes
-          <Link to="/resumes/new" className="btn btn-success pull-right">New Resume</Link>
-        </h1>
-        <ResumesList resumes={resumes} />
-      </section>
+      <DocumentTitle title="All Resumes">
+        <section className="container">
+          <h1 className="page-header">
+            Resumes ({resumes.length})
+            <Link to="/resumes/new" className="btn btn-success pull-right">New Resume</Link>
+          </h1>
+          <ResumesList resumes={resumes} />
+        </section>
+      </DocumentTitle>
     );
   }
 }

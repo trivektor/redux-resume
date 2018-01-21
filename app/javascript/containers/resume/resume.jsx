@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
+import DocumentTitle from 'react-document-title';
 import * as actionCreators from 'actions';
 
 class Resume extends Component {
@@ -11,13 +12,21 @@ class Resume extends Component {
   }
 
   render() {
+    const {
+      resume,
+    } = this.props;
+
     return (
-      <section className="container">
-        <h1 className="page-header">
-          {this.props.resume.title}
-          <Link to="/resumes" className="btn btn-info pull-right">View All</Link>
-        </h1>
-      </section>
+      <DocumentTitle title={resume.title || ''}>
+        <section className="container">
+          <h1 className="page-header">
+            {resume.title}
+            <Link to="/resumes" className="btn btn-info pull-right">View All</Link>
+          </h1>
+          <p>
+          </p>
+        </section>
+      </DocumentTitle>
     );
   }
 }

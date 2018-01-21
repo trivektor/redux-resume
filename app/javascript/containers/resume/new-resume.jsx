@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import fetch from 'cross-fetch';
+import DocumentTitle from 'react-document-title';
+import * as actionCreators from 'actions';
 
 class NewResume extends Component {
   constructor(props) {
@@ -24,6 +26,8 @@ class NewResume extends Component {
     } = this.props;
 
     const token = document.getElementsByName('csrf-token')[0].getAttribute('content');
+
+    console.log({newResume});
 
     fetch('/api/resumes', {
       method: 'POST',
@@ -49,31 +53,33 @@ class NewResume extends Component {
     } = this.props;
 
     return (
-      <section className="container">
-        <h1 className="page-header">New Resume</h1>
-        <form onSubmit={this.handleSubmit}>
-          <FormGroup>
-            <ControlLabel>Title</ControlLabel>
-            <FormControl
-              placeholder="Title"
-              value={newResume.title}
-              onChange={(event) => actions.modifyResumeProps({ title: event.target.value })} />
-          </FormGroup>
-          <FormGroup>
-            <ControlLabel>Description</ControlLabel>
-            <FormControl
-              componentClass="textarea"
-              placeholder="Description"
-              value={newResume.description}
-              onChange={(event) => actions.modifyResumeProps({ description: event.target.value })} />
-          </FormGroup>
-          <FormGroup>
-            <Button type="submit" bsStyle="primary" bsSize="lg">Create</Button>
-            {' '}
-            <Link className="btn btn-link" to="/resumes">Cancel</Link>
-          </FormGroup>
-        </form>
-      </section>
+      <DocumentTitle title="New Resume">
+        <section className="container">
+          <h1 className="page-header">New Resume</h1>
+          <form onSubmit={this.handleSubmit}>
+            <FormGroup>
+              <ControlLabel>Title</ControlLabel>
+              <FormControl
+                placeholder="Title"
+                value={newResume.title}
+                onChange={(event) => actions.modifyResumeProps({ title: event.target.value })} />
+            </FormGroup>
+            <FormGroup>
+              <ControlLabel>Description</ControlLabel>
+              <FormControl
+                componentClass="textarea"
+                placeholder="Description"
+                value={newResume.description}
+                onChange={(event) => actions.modifyResumeProps({ description: event.target.value })} />
+            </FormGroup>
+            <FormGroup>
+              <Button type="submit" bsStyle="primary" bsSize="lg">Create</Button>
+              {' '}
+              <Link className="btn btn-link" to="/resumes">Cancel</Link>
+            </FormGroup>
+          </form>
+        </section>
+      </DocumentTitle>
     );
   }
 }
@@ -84,4 +90,10 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, null)(NewResume);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(actionCreators, dispatch),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewResume);

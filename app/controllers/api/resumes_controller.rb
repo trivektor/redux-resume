@@ -11,6 +11,13 @@ class Api::ResumesController < ApplicationController
     @resume = Resume.create(resume_params)
   end
 
+  def destroy
+    resume = Resume.find params[:id]
+    resume.destroy
+
+    render json: { status: 'deleted' }
+  end
+
   private
 
   def resume_params

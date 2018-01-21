@@ -34,3 +34,22 @@ export const fetchResumeSuccess = createAction(FETCH_RESUME_SUCCESS);
 const MODIFY_RESUME_PROPS = 'MODIFY_RESUME_PROPS';
 
 export const modifyResumeProps = createAction(MODIFY_RESUME_PROPS, (props) => props);
+
+const DELETE_RESUME = 'DELETE_RESUME';
+
+export const deleteResume = (id) => {
+  return (dispatch) => {
+    const token = document.getElementsByName('csrf-token')[0].getAttribute('content');
+
+    fetch(`/api/resumes/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'X-CSRF-Token': token,
+      },
+      credentials: 'same-origin',
+    }).then(() => {
+      dispatch(fetchResumes());
+    });
+  };
+};
