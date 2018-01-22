@@ -4,10 +4,11 @@ import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import DocumentTitle from 'react-document-title';
 import * as actionCreators from 'actions';
+import ResumeForm from 'components/resume/resume-form';
+import getCSRFToken from 'utils/get-csrf-token';
 
 class Resume extends Component {
-  constructor(props) {
-    super(props);
+  componentWillMount() {
     this.props.actions.fetchResume(this.props.match.params.id);
   }
 
@@ -23,8 +24,8 @@ class Resume extends Component {
             {resume.title}
             <Link to="/resumes" className="btn btn-info pull-right">View All</Link>
           </h1>
-          <p>
-          </p>
+          <strong>Description:</strong>
+          <p>{resume.description}</p>
         </section>
       </DocumentTitle>
     );

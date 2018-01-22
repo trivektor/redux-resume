@@ -11,6 +11,13 @@ class Api::ResumesController < ApplicationController
     @resume = Resume.create(resume_params)
   end
 
+  def update
+    resume = Resume.find params[:id]
+    resume.update_attributes(resume_params)
+
+    render json: { status: 'updated' }
+  end
+
   def destroy
     resume = Resume.find params[:id]
     resume.destroy

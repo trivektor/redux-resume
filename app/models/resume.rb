@@ -5,4 +5,6 @@ class Resume
   column :title, :text
   column :description, :text
   timestamps
+
+  has_many :sections
 end

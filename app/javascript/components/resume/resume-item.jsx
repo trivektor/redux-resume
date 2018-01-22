@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/lib/Button';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import FontAwesome from 'react-fontawesome';
 import * as actionCreators from 'actions';
 
 const ResumeItem = ({ resume, actions }) => {
@@ -23,13 +24,23 @@ const ResumeItem = ({ resume, actions }) => {
       <strong>
         <Link to={`/resume/${id}`}>{title}</Link>
       </strong>
-      <Button
-        bsStyle="danger"
-        bsSize="sm"
-        className="pull-right"
-        onClick={onClick}>
-        Delete
-      </Button>
+      <aside className="pull-right">
+        <Link
+          to={`resume/${id}/edit`}
+          className="btn btn-info">
+          <FontAwesome name="pencil" />
+          {' '}
+          Edit
+        </Link>
+        {' '}
+        <Button
+          bsStyle="danger"
+          onClick={onClick}>
+          <FontAwesome name="trash" />
+          {' '}
+          Delete
+        </Button>
+      </aside>
       <p>{description}</p>
     </li>
   );
