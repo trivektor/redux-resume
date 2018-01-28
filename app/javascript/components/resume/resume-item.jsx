@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/lib/Button';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { toastr } from 'react-redux-toastr';
 import FontAwesome from 'react-fontawesome';
 import * as actionCreators from 'actions';
 
@@ -15,7 +16,10 @@ const ResumeItem = ({ resume, actions }) => {
 
   const onClick = () => {
     if (confirm('Are you sure?')) {
-      actions.deleteResume(id);
+      actions.deleteResume(id).then(() => {
+        toastr.success('Resume deleted');
+        actions.fetchResumes();
+      });
     }
   }
 

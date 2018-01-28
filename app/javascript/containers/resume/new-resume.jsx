@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import fetch from 'cross-fetch';
 import DocumentTitle from 'react-document-title';
 import { compose as recompose, withHandlers, lifecycle } from 'recompose';
+import { toastr } from 'react-redux-toastr';
 import * as actionCreators from 'actions';
 import ResumeForm from 'components/resume/resume-form';
 import getCSRFToken from 'utils/get-csrf-token';
@@ -61,6 +62,7 @@ export default recompose(
         },
         credentials: 'same-origin',
       }).then(() => {
+        toastr.success('Resume created');
         history.push('/resumes');
       });
     },

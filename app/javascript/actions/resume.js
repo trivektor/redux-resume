@@ -41,15 +41,13 @@ export const deleteResume = (id) => {
   return (dispatch) => {
     const token = document.getElementsByName('csrf-token')[0].getAttribute('content');
 
-    fetch(`/api/resumes/${id}`, {
+    return fetch(`/api/resumes/${id}`, {
       method: 'DELETE',
       headers: {
         'Accept': 'application/json',
         'X-CSRF-Token': token,
       },
       credentials: 'same-origin',
-    }).then(() => {
-      dispatch(fetchResumes());
     });
   };
 };

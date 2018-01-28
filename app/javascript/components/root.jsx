@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import logger from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
+import ReduxToastr from 'react-redux-toastr';
 import Home from 'components/home';
 import { Resumes, NewResume, Resume, EditResume } from 'containers/resume';
 import rootReducer from 'reducers/root.reducer';
@@ -22,6 +23,7 @@ class Root extends Component {
       <Provider store={store}>
         <Router>
           <div>
+            <ReduxToastr preventDuplicates />
             <Route exact path="/" component={Resumes} />
             <Route exact path="/resumes" component={Resumes} />
             <Route path="/resumes/new" component={NewResume} />
