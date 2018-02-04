@@ -57,3 +57,5 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'cequel'
 gem 'activemodel-serializers-xml'
+gem 'bootstrap-sass'
+gem 'bootswatch-rails'
