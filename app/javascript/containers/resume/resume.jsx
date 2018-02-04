@@ -6,7 +6,6 @@ import { compose as recompose, lifecycle } from 'recompose';
 import DocumentTitle from 'react-document-title';
 import * as actionCreators from 'actions';
 import ResumeForm from 'components/resume/resume-form';
-import ResumeSections from 'components/section/resume-sections';
 import getCSRFToken from 'utils/get-csrf-token';
 
 const Resume = (props) => {
@@ -21,7 +20,6 @@ const Resume = (props) => {
         </h1>
         <strong>Description:</strong>
         <p>{resume.description}</p>
-        <ResumeSections />
       </section>
     </DocumentTitle>
   );

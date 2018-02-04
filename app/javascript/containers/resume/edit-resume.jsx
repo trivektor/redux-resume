@@ -7,10 +7,11 @@ import fetch from 'cross-fetch';
 import { compose as recompose, withHandlers, lifecycle } from 'recompose';
 import * as actionCreators from 'actions';
 import ResumeForm from 'components/resume/resume-form';
+import ResumeSections from 'components/section/resume-sections';
 import getCSRFToken from 'utils/get-csrf-token';
 
 const EditResume = (props) => {
-  const { resume, onSubmit } = props;
+  const { resume, onSubmit, sections } = props;
 
   return (
     <DocumentTitle title={resume.title || ''}>
@@ -21,6 +22,7 @@ const EditResume = (props) => {
         <form onSubmit={onSubmit}>
           <ResumeForm resume={resume} />
         </form>
+        <ResumeSections sections={sections} />
       </section>
     </DocumentTitle>
   );
