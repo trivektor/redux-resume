@@ -11,6 +11,14 @@ const sections = (state = [], action) => {
       ];
     }
 
+    case 'REMOVE_SECTION': {
+      const sections = [...state];
+
+      sections.splice(action.payload, 1);
+
+      return sections;
+    }
+
     default: {
       return state;
     }

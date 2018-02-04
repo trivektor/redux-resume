@@ -8,7 +8,6 @@ import ResumeSectionItem from 'components/section/resume-section-item';
 
 const ResumeSections = (props) => {
   const { sections, onAddSection } = props;
-  console.log({sections});
 
   return (
     <section>
@@ -19,7 +18,7 @@ const ResumeSections = (props) => {
       </div>
       {
         sections.map((s, index) => {
-          return <ResumeSectionItem key={index} section={s} />
+          return <ResumeSectionItem key={index} section={s} index={index} />
         })
       }
     </section>
@@ -43,7 +42,7 @@ export default recompose(
 
   withHandlers({
     onAddSection: (props) => () => {
-      props.actions.addSection({ title: 'New Section' });
+      props.actions.addSection({ title: 'New Section', body: '...' });
     }
   })
 )(ResumeSections);
