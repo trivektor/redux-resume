@@ -3,6 +3,8 @@ import FormControl from 'react-bootstrap/lib/FormControl';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import Button from 'react-bootstrap/lib/Button';
+import Col from 'react-bootstrap/lib/Col';
+import Row from 'react-bootstrap/lib/Row';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from 'actions';
@@ -23,19 +25,22 @@ class ResumeForm extends Component {
           </Button>
         </h1>
         <FormGroup>
-          <ControlLabel>Title</ControlLabel>
-          <FormControl
-            placeholder="Title"
-            value={resume.title}
-            onChange={(event) => actions.modifyResumeProps({ title: event.target.value })} />
-        </FormGroup>
-        <FormGroup>
-          <ControlLabel>Description</ControlLabel>
-          <FormControl
-            componentClass="textarea"
-            placeholder="Description"
-            value={resume.description}
-            onChange={(event) => actions.modifyResumeProps({ description: event.target.value })} />
+          <Row>
+            <Col lg="6">
+              <ControlLabel>Title</ControlLabel>
+              <FormControl
+                placeholder="Title"
+                value={resume.title}
+                onChange={(event) => actions.modifyResumeProps({ title: event.target.value })} />
+            </Col>
+            <Col lg="6">
+              <ControlLabel>Description</ControlLabel>
+              <FormControl
+                placeholder="Description"
+                value={resume.description}
+                onChange={(event) => actions.modifyResumeProps({ description: event.target.value })} />
+            </Col>
+          </Row>
         </FormGroup>
       </div>
     );
