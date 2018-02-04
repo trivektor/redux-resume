@@ -1,7 +1,7 @@
 const sections = (state = [], action) => {
   switch (action.type) {
     case 'FETCH_SECTIONS_SUCCESS': {
-      return action.payload.sections;
+      return action.payload;
     }
 
     case 'ADD_SECTION': {
@@ -12,14 +12,18 @@ const sections = (state = [], action) => {
     }
 
     case 'REMOVE_SECTION': {
-      return state.filter((s) => s.uuid !== action.payload);
+      return state.filter((s) => {
+        return s.isNew ? s.uuid !== action.payload : s.id !== action.payload;
+      });
     }
 
     case 'MODIFY_SECTION_PROPS': {
-      const { prop, uuid, value } = action.payload;
+      const { prop, identifier, value } = action.payload;
 
       return state.map((s) => {
-        return s.uuid === uuid ?  {
+        const match = s.isNew ? s.uuid === identifier : s.id === identifier;
+
+        return match ?  {
           ...s,
           [prop]: value,
         } : s;

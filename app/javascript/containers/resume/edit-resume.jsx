@@ -18,7 +18,7 @@ const EditResume = (props) => {
       <section className="container">
         <form onSubmit={onSubmit}>
           <ResumeForm resume={resume} />
-          <ResumeSections sections={sections} />
+          <ResumeSections resume={resume} sections={sections} />
         </form>
       </section>
     </DocumentTitle>
@@ -42,7 +42,13 @@ export default recompose(
 
   lifecycle({
     componentDidMount() {
-      this.props.actions.fetchResume(this.props.match.params.id);
+      const {
+        actions,
+        match,
+        resume,
+      } = this.props;
+
+      actions.fetchResume(match.params.id);
     },
   }),
 

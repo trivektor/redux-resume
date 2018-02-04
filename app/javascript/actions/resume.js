@@ -1,5 +1,6 @@
 import { createAction } from 'redux-actions';
 import fetch from 'cross-fetch';
+import { fetchSections } from './section';
 
 const FETCH_RESUMES_START = 'FETCH_RESUMES_START';
 const FETCH_RESUMES_SUCCESS = 'FETCH_RESUMES_SUCCESS';
@@ -26,6 +27,7 @@ export const fetchResume = (id) => {
 
     fetch(`/api/resumes/${id}`).then(response => response.json()).then((resume) => {
       dispatch(fetchResumeSuccess(resume));
+      dispatch(fetchSections(id));
     });
   };
 };

@@ -20,7 +20,7 @@ const ResumeSectionItem = (props) => {
 
   const normalTitle = (
     <div className="clearfix">
-      <h4 className="pull-left" style={{ marginTop: 0 }}>{section.title}</h4>
+      <h4 className="pull-left" style={{ marginTop: 0 }}>{section.name}</h4>
       <aside className="pull-right">
         <Button bsSize="xs" onClick={() => setEditMode(!editMode)}>
           <FontAwesome name="pencil" />
@@ -28,7 +28,7 @@ const ResumeSectionItem = (props) => {
           Update
         </Button>
         {' '}
-        <Button bsSize="xs" bsStyle="danger" onClick={() => onRemoveSection(section.uuid)}>
+        <Button bsSize="xs" bsStyle="danger" onClick={() => onRemoveSection(section.isNew ? section.uuid : section.id)}>
           <FontAwesome name="trash" />
           {' '}
           Remove
@@ -40,8 +40,8 @@ const ResumeSectionItem = (props) => {
   const editModeTitle = (
     <InputGroup>
       <FormControl
-        value={section.title}
-        onChange={(event) => onFieldChange('title', event.target.value, section.uuid)} />
+        value={section.name}
+        onChange={(event) => onFieldChange('name', event.target.value, section.isNew ? section.uuid : section.id)} />
       <InputGroup.Addon onClick={() => setEditMode(!editMode)}>
         <FontAwesome name="check" />
       </InputGroup.Addon>
@@ -53,7 +53,7 @@ const ResumeSectionItem = (props) => {
       componentClass="textarea"
       rows="10"
       value={section.body}
-      onChange={(event) => onFieldChange('body', event.target.value, section.uuid)} />
+      onChange={(event) => onFieldChange('body', event.target.value, section.isNew ? section.uuid : section.id)} />
   );
 
   const normalBody = (
@@ -82,16 +82,16 @@ export default recompose(
   connect(null, mapDispatchToProps),
 
   withHandlers({
-    onFieldChange: (props) => (prop, value, uuid) => {
+    onFieldChange: (props) => (prop, value, identifier) => {
       props.actions.modifySectionProps({
         prop,
         value,
-        uuid,
+        identifier,
       });
     },
 
-    onRemoveSection: (props) => (index) => {
-      props.actions.removeSection(index);
+    onRemoveSection: (props) => (identifier) => {
+      props.actions.removeSection(identifier);
     },
   }),
 

@@ -9,7 +9,7 @@ import * as actionCreators from 'actions';
 import ResumeSectionItem from 'components/section/resume-section-item';
 
 const ResumeSections = (props) => {
-  const { sections, onAddSection } = props;
+  const { resume, sections, onAddSection, onSaveSections } = props;
 
   return (
     <section style={{ marginTop: 40 }}>
@@ -22,7 +22,7 @@ const ResumeSections = (props) => {
             New Section
           </Button>
           {' '}
-          <Button bsStyle="primary">
+          <Button bsStyle="primary" onClick={() => onSaveSections(resume.id, sections)}>
             <FontAwesome name="save" />
             {' '}
             Save
@@ -57,9 +57,14 @@ export default recompose(
     onAddSection: (props) => () => {
       props.actions.addSection({
         uuid: uuidv4(),
-        title: 'New Section',
+        name: 'New Section',
         body: '...',
+        isNew: true,
       });
-    }
+    },
+
+    onSaveSections: (props) => (resumeId, sections) => {
+      props.actions.saveSections(resumeId, sections);
+    },
   })
 )(ResumeSections);
