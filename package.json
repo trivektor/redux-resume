@@ -25,6 +25,7 @@
     "redux-thunk": "^2.2.0",
     "redux-toastr": "^1.1.4",
     "resolve-url-loader": "^2.2.1",
+    "uuid": "^3.2.1",
     "webpacker-react": "^0.3.2"
   },
   "devDependencies": {

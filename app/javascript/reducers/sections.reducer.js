@@ -12,11 +12,18 @@ const sections = (state = [], action) => {
     }
 
     case 'REMOVE_SECTION': {
-      const sections = [...state];
+      return state.filter((s) => s.uuid !== action.payload);
+    }
 
-      sections.splice(action.payload, 1);
+    case 'MODIFY_SECTION_PROPS': {
+      const { prop, uuid, value } = action.payload;
 
-      return sections;
+      return state.map((s) => {
+        return s.uuid === uuid ?  {
+          ...s,
+          [prop]: value,
+        } : s;
+      });
     }
 
     default: {
