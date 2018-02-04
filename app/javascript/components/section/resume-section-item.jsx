@@ -6,6 +6,7 @@ import FontAwesome from 'react-fontawesome';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import InputGroup from 'react-bootstrap/lib/InputGroup';
 import Button from 'react-bootstrap/lib/Button';
+import Panel from 'react-bootstrap/lib/Panel';
 import * as actionCreators from 'actions';
 
 const ResumeSectionItem = (props) => {
@@ -18,15 +19,19 @@ const ResumeSectionItem = (props) => {
   } = props;
 
   const normalTitle = (
-    <div className="clearfix page-header">
+    <div className="clearfix">
       <h4 className="pull-left" style={{ marginTop: 0 }}>{section.title}</h4>
       <aside className="pull-right">
-        <Button bsSize="sm" onClick={() => setEditMode(!editMode)}>
+        <Button bsSize="xs" onClick={() => setEditMode(!editMode)}>
           <FontAwesome name="pencil" />
+          {' '}
+          Update
         </Button>
         {' '}
-        <Button bsSize="sm" bsStyle="danger" onClick={() => onRemoveSection(section.uuid)}>
+        <Button bsSize="xs" bsStyle="danger" onClick={() => onRemoveSection(section.uuid)}>
           <FontAwesome name="trash" />
+          {' '}
+          Remove
         </Button>
       </aside>
     </div>
@@ -46,7 +51,6 @@ const ResumeSectionItem = (props) => {
   const editModeBody = (
     <FormControl
       componentClass="textarea"
-      style={{ marginTop: 20 }}
       rows="10"
       value={section.body}
       onChange={(event) => onFieldChange('body', event.target.value, section.uuid)} />
@@ -57,10 +61,14 @@ const ResumeSectionItem = (props) => {
   );
 
   return (
-    <div style={{ margin: '40px 0' }}>
-      { editMode ? editModeTitle : normalTitle }
-      { editMode ? editModeBody : normalBody }
-    </div>
+    <Panel style={{ margin: '40px 0' }}>
+      <Panel.Heading>
+        { editMode ? editModeTitle : normalTitle }
+      </Panel.Heading>
+      <Panel.Body>
+        { editMode ? editModeBody : normalBody }
+      </Panel.Body>
+    </Panel>
   );
 };
 

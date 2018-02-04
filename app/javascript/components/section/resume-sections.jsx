@@ -3,6 +3,7 @@ import { compose as recompose, withHandlers } from 'recompose';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Button from 'react-bootstrap/lib/Button';
+import FontAwesome from 'react-fontawesome';
 import uuidv4 from 'uuid/v4';
 import * as actionCreators from 'actions';
 import ResumeSectionItem from 'components/section/resume-section-item';
@@ -11,11 +12,22 @@ const ResumeSections = (props) => {
   const { sections, onAddSection } = props;
 
   return (
-    <section>
-      <hr />
+    <section style={{ marginTop: 40 }}>
       <div className="clearfix" style={{ marginBottom: 40 }}>
         <h3 className="pull-left" style={{ marginTop: 0 }}>Sections ({sections.length})</h3>
-        <Button bsStyle="success" className="pull-right" onClick={onAddSection}>Add</Button>
+        <aside className="pull-right">
+          <Button bsStyle="success" onClick={onAddSection}>
+            <FontAwesome name="plus" />
+            {' '}
+            New Section
+          </Button>
+          {' '}
+          <Button bsStyle="primary">
+            <FontAwesome name="save" />
+            {' '}
+            Save
+          </Button>
+        </aside>
       </div>
       {
         sections.map((s, index) => {
