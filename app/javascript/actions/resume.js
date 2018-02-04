@@ -14,7 +14,7 @@ export const fetchResumes = () => {
     });
   };
 };
-export const fetchResumesSuccess = createAction(FETCH_RESUMES_SUCCESS, (resumes) => resumes);
+export const fetchResumesSuccess = createAction(FETCH_RESUMES_SUCCESS);
 
 const FETCH_RESUME_START = 'FETCH_RESUME_START';
 const FETCH_RESUME_SUCCESS = 'FETCH_RESUME_SUCCESS';
@@ -33,7 +33,7 @@ export const fetchResumeSuccess = createAction(FETCH_RESUME_SUCCESS);
 
 const MODIFY_RESUME_PROPS = 'MODIFY_RESUME_PROPS';
 
-export const modifyResumeProps = createAction(MODIFY_RESUME_PROPS, (props) => props);
+export const modifyResumeProps = createAction(MODIFY_RESUME_PROPS);
 
 const DELETE_RESUME = 'DELETE_RESUME';
 
