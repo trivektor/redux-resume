@@ -3,7 +3,7 @@ import ResumeItem from 'components/resume/resume-item';
 
 const ResumesList = ({ resumes }) => {
   return (
-    <ul className="list-unstyled">
+    <section>
       {
         resumes.map((r) => {
           return (
@@ -11,7 +11,7 @@ const ResumesList = ({ resumes }) => {
           );
         })
       }
-    </ul>
+    </section>
   );
 }
 

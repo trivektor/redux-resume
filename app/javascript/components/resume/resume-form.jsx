@@ -16,6 +16,12 @@ class ResumeForm extends Component {
 
     return (
       <div>
+        <h1 className="page-header">
+          {resume.title}
+          <Button type="submit" bsStyle="primary" className="pull-right">
+            { resume.isNew ? 'Create' : 'Update' }
+          </Button>
+        </h1>
         <FormGroup>
           <ControlLabel>Title</ControlLabel>
           <FormControl
@@ -30,11 +36,6 @@ class ResumeForm extends Component {
             placeholder="Description"
             value={resume.description}
             onChange={(event) => actions.modifyResumeProps({ description: event.target.value })} />
-        </FormGroup>
-        <FormGroup>
-          <Button type="submit" bsStyle="primary" bsSize="lg">
-            { resume.isNew ? 'Create' : 'Update' }
-          </Button>
         </FormGroup>
       </div>
     );

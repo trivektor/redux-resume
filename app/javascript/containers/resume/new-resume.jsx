@@ -15,7 +15,6 @@ const NewResume = (props) => {
   return (
     <DocumentTitle title={newResume.title}>
       <section className="container">
-        <h1 className="page-header">{newResume.title || ''}</h1>
         <form onSubmit={onSubmit}>
           <ResumeForm resume={newResume} />
         </form>

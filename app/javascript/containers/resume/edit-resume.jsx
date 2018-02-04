@@ -16,13 +16,10 @@ const EditResume = (props) => {
   return (
     <DocumentTitle title={resume.title || ''}>
       <section className="container">
-        <h1 className="page-header">
-          <span className="text-muted">Edit</span>: {resume.title}
-        </h1>
         <form onSubmit={onSubmit}>
           <ResumeForm resume={resume} />
+          <ResumeSections sections={sections} />
         </form>
-        <ResumeSections sections={sections} />
       </section>
     </DocumentTitle>
   );

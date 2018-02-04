@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/lib/Button';
+import Panel from 'react-bootstrap/lib/Panel';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toastr } from 'react-redux-toastr';
@@ -24,29 +25,32 @@ const ResumeItem = ({ resume, actions }) => {
   }
 
   return (
-    <li>
-      <strong>
-        <Link to={`/resume/${id}`}>{title}</Link>
-      </strong>
-      <aside className="pull-right">
-        <Link
-          to={`resume/${id}/edit`}
-          className="btn btn-info">
-          <FontAwesome name="pencil" />
+    <Panel>
+      <Panel.Heading>
+        <strong className="lead">
+          <Link to={`/resume/${id}`}>{title}</Link>
+        </strong>
+        <aside className="pull-right">
+          <Link
+            to={`resume/${id}/edit`}
+            className="btn btn-info btn-xs">
+            <FontAwesome name="pencil" />
+            {' '}
+            Edit
+          </Link>
           {' '}
-          Edit
-        </Link>
-        {' '}
-        <Button
-          bsStyle="danger"
-          onClick={onClick}>
-          <FontAwesome name="trash" />
-          {' '}
-          Delete
-        </Button>
-      </aside>
-      <p>{description}</p>
-    </li>
+          <Button
+            bsStyle="danger"
+            bsSize="xs"
+            onClick={onClick}>
+            <FontAwesome name="trash" />
+            {' '}
+            Delete
+          </Button>
+        </aside>
+      </Panel.Heading>
+      <Panel.Body>{description}</Panel.Body>
+    </Panel>
   );
 };
 
