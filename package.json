@@ -14,6 +14,8 @@
     "react-document-title": "^2.0.3",
     "react-dom": "^16.2.0",
     "react-fontawesome": "^1.6.1",
+    "react-markdown": "^3.1.5",
+    "react-mde": "^2.3.2",
     "react-redux": "^5.0.6",
     "react-redux-toastr": "^7.2.0",
     "react-router": "^4.2.0",
@@ -25,6 +27,7 @@
     "redux-thunk": "^2.2.0",
     "redux-toastr": "^1.1.4",
     "resolve-url-loader": "^2.2.1",
+    "showdown": "^1.8.6",
     "uuid": "^3.2.1",
     "webpacker-react": "^0.3.2"
   },

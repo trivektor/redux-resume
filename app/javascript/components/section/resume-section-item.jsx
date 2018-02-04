@@ -1,5 +1,5 @@
 import React from 'react';
-import { compose as recompose, withHandlers, withState } from 'recompose';
+import { compose as recompose, withHandlers, withState, withStateHandlers } from 'recompose';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
@@ -7,6 +7,9 @@ import FormControl from 'react-bootstrap/lib/FormControl';
 import InputGroup from 'react-bootstrap/lib/InputGroup';
 import Button from 'react-bootstrap/lib/Button';
 import Panel from 'react-bootstrap/lib/Panel';
+import ReactMde, { ReactMdeCommands } from 'react-mde';
+import ReactMarkdown from 'react-markdown';
+import get from 'lodash/get';
 import * as actionCreators from 'actions';
 
 const ResumeSectionItem = (props) => {
@@ -14,8 +17,11 @@ const ResumeSectionItem = (props) => {
     section,
     onFieldChange,
     onRemoveSection,
+    onUpdateMdeEditor,
     setEditMode,
     editMode,
+    reactMdeValue,
+    actions,
   } = props;
 
   const normalTitle = (
@@ -49,15 +55,22 @@ const ResumeSectionItem = (props) => {
   );
 
   const editModeBody = (
-    <FormControl
-      componentClass="textarea"
-      rows="10"
-      value={section.body}
-      onChange={(event) => onFieldChange('body', event.target.value, section.isNew ? section.uuid : section.id)} />
+    <ReactMde
+      textAreaProps={{ rows: 10 }}
+      commands={ReactMdeCommands.getDefaultCommands()}
+      value={reactMdeValue}
+      onChange={(value) => {
+        const identifier = section.isNew ? section.uuid : section.id;
+
+        onUpdateMdeEditor(value, 'body', identifier);
+
+        onFieldChange('body', value.text, identifier);
+      }}
+      showdownOptions={{}} />
   );
 
   const normalBody = (
-    <div>{section.body}</div>
+    <ReactMarkdown source={section.body} />
   );
 
   return (
@@ -95,5 +108,22 @@ export default recompose(
     },
   }),
 
-  withState('editMode', 'setEditMode', false)
+  withState('editMode', 'setEditMode', false),
+
+  withStateHandlers(
+    (props) => {
+      return {
+        reactMdeValue: {
+          text: props.section.body,
+        },
+      };
+    },
+    {
+      onUpdateMdeEditor: () => (value, body, identifier) => {
+        return {
+          reactMdeValue: value,
+        };
+      },
+    },
+  ),
 )(ResumeSectionItem);
