@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
 import FormControl from 'react-bootstrap/lib/FormControl';
-import InputGroup from 'react-bootstrap/lib/InputGroup';
 import Button from 'react-bootstrap/lib/Button';
 import Panel from 'react-bootstrap/lib/Panel';
 import ReactMde, { ReactMdeCommands } from 'react-mde';
@@ -22,7 +21,10 @@ const ResumeSectionItem = (props) => {
     editMode,
     reactMdeValue,
     actions,
+    commitSectionUpdate,
+    discardSectionUpdate,
   } = props;
+  const identifier = section.isNew ? section.uuid : section.id;
 
   const normalTitle = (
     <div className="clearfix">
@@ -34,7 +36,7 @@ const ResumeSectionItem = (props) => {
           Update
         </Button>
         {' '}
-        <Button bsSize="xs" bsStyle="danger" onClick={() => onRemoveSection(section.isNew ? section.uuid : section.id)}>
+        <Button bsSize="xs" bsStyle="danger" onClick={() => onRemoveSection(identifier)}>
           <FontAwesome name="trash" />
           {' '}
           Remove
@@ -44,14 +46,21 @@ const ResumeSectionItem = (props) => {
   );
 
   const editModeTitle = (
-    <InputGroup>
-      <FormControl
-        value={section.name}
-        onChange={(event) => onFieldChange('name', event.target.value, section.isNew ? section.uuid : section.id)} />
-      <InputGroup.Addon onClick={() => setEditMode(!editMode)}>
-        <FontAwesome name="check" />
-      </InputGroup.Addon>
-    </InputGroup>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <FormControl
+          value={section.name}
+          onChange={(event) => onFieldChange('name', event.target.value, identifier)} />
+        <Button bsStyle="info" onClick={commitSectionUpdate} style={{ margin: '0 8px' }}>
+          <FontAwesome name="check" />
+          {' '}
+          Update
+        </Button>
+        <Button bsStyle="danger" onClick={discardSectionUpdate}>
+          <FontAwesome name="ban" />
+          {' '}
+          Discard
+        </Button>
+      </div>
   );
 
   const editModeBody = (
@@ -60,10 +69,7 @@ const ResumeSectionItem = (props) => {
       commands={ReactMdeCommands.getDefaultCommands()}
       value={reactMdeValue}
       onChange={(value) => {
-        const identifier = section.isNew ? section.uuid : section.id;
-
-        onUpdateMdeEditor(value, 'body', identifier);
-
+        onUpdateMdeEditor(value);
         onFieldChange('body', value.text, identifier);
       }}
       showdownOptions={{}} />
@@ -94,6 +100,26 @@ const mapDispatchToProps = (dispatch) => {
 export default recompose(
   connect(null, mapDispatchToProps),
 
+  withState('editMode', 'setEditMode', false),
+
+  withStateHandlers(
+    (props) => {
+      const { section } = props;
+
+      return {
+        reactMdeValue: {
+          text: section.body,
+        },
+        originalSection: section,
+      };
+    },
+    {
+      onUpdateMdeEditor: () => (value) => ({ reactMdeValue: value }),
+
+      onUpdateOriginalSection: () => (section) => ({ originalSection: section }),
+    },
+  ),
+
   withHandlers({
     onFieldChange: (props) => (prop, value, identifier) => {
       props.actions.modifySectionProps({
@@ -108,22 +134,38 @@ export default recompose(
     },
   }),
 
-  withState('editMode', 'setEditMode', false),
+  withHandlers({
+    commitSectionUpdate: (props) => () => {
+      const {
+        setEditMode,
+        editMode,
+        onFieldChange,
+        onUpdateOriginalSection,
+        section,
+      } = props;
+      const identifier = section.isNew ? section.uuid : section.id;
 
-  withStateHandlers(
-    (props) => {
-      return {
-        reactMdeValue: {
-          text: props.section.body,
-        },
-      };
+      setEditMode(!editMode);
+      onFieldChange('body', section.body, identifier);
+      onFieldChange('name', section.name, identifier);
+      onUpdateOriginalSection(section);
     },
-    {
-      onUpdateMdeEditor: () => (value, body, identifier) => {
-        return {
-          reactMdeValue: value,
-        };
-      },
+
+    discardSectionUpdate: (props) => () => {
+      const {
+        setEditMode,
+        editMode,
+        onUpdateMdeEditor,
+        onFieldChange,
+        originalSection,
+        section,
+      } = props;
+      const identifier = section.isNew ? section.uuid : section.id;
+
+      setEditMode(!editMode);
+      onUpdateMdeEditor({ text: originalSection.body });
+      onFieldChange('body', originalSection.body, identifier);
+      onFieldChange('name', originalSection.name, identifier);
     },
-  ),
+  }),
 )(ResumeSectionItem);
