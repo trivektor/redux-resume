@@ -11,14 +11,18 @@ import ResumeSections from 'components/section/resume-sections';
 import getCSRFToken from 'utils/get-csrf-token';
 
 const EditResume = (props) => {
-  const { resume, onSubmit, sections } = props;
+  const { resume, onSubmit } = props;
 
   return (
     <DocumentTitle title={resume.title || ''}>
       <section className="container">
         <form onSubmit={onSubmit}>
           <ResumeForm resume={resume} />
-          <ResumeSections resume={resume} sections={sections} />
+          {
+            resume.id
+            ? <ResumeSections resume={resume} />
+            : <div className="text-center">Loading...</div>
+          }
         </form>
       </section>
     </DocumentTitle>

@@ -27,7 +27,6 @@ export const fetchResume = (id) => {
 
     fetch(`/api/resumes/${id}`).then(response => response.json()).then((resume) => {
       dispatch(fetchResumeSuccess(resume));
-      dispatch(fetchSections(id));
     });
   };
 };
